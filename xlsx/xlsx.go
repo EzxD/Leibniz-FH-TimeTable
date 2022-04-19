@@ -59,7 +59,7 @@ func ParseTimeString(startDate string, startTime, endDate string, endTime string
 	return startString + "+02:00", endString + "+02:00"
 }
 
-func GetAllWeeks(f *excelize.File) (error, map[uint]uint) {
+func GetAllWeeks(f *excelize.File) (map[uint]uint, error) {
 	m := make(map[uint]uint)
 	rows, err := f.GetRows("dIT21")
 	for i, v := range rows {
@@ -70,7 +70,7 @@ func GetAllWeeks(f *excelize.File) (error, map[uint]uint) {
 			}
 		}
 	}
-	return err, m
+	return m, err
 }
 
 func UnmergeAllCells(name string) error {

@@ -68,7 +68,7 @@ func createAll() {
 		}
 	}()
 
-	err, kws := xlsx.GetAllWeeks(f)
+	kws, err := xlsx.GetAllWeeks(f)
 
 	if err != nil {
 		fmt.Printf("failed to parse all weeks %v\n", err)
