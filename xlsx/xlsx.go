@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ezxd/leibniz-fh-timetable/cal"
+	"github.com/EzxD/Leibniz-FH-TimeTable/cal"
 	"github.com/xuri/excelize/v2"
 )
 
@@ -73,12 +73,23 @@ func GetAllWeeks(f *excelize.File) (error, map[uint]uint) {
 	return err, m
 }
 
-func UnmergeAllCells(f *excelize.File) error {
+func UnmergeAllCells(name string) error {
+	f, err := excelize.OpenFile(name)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	defer func() {
+		// Close the spreadsheet.
+		if err := f.Close(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 	mcells, err := f.GetMergeCells("dIT21")
 	for _, mc := range mcells {
 		fmt.Println(mc)
 		f.UnmergeCell("dIT21", mc.GetStartAxis(), mc.GetEndAxis())
 	}
-	f.SaveAs("test.xlsx")
+	f.SaveAs("unmerged.xlsx")
 	return err
 }

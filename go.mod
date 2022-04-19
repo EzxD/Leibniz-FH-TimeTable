@@ -1,4 +1,4 @@
-module github.com/ezxd/leibniz-fh-timetable
+module github.com/EzxD/Leibniz-FH-TimeTable
 
 go 1.18
 

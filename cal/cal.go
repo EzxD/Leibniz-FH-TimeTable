@@ -15,12 +15,16 @@ import (
 	"google.golang.org/api/option"
 )
 
-const (
-	calendarId = "c_oe23f3v47u9n1v29hj35m86hjc@group.calendar.google.com"
+var (
+	CalendarId string
 )
 
 func CreateEvent(title string, start string, end string) {
 	srv, err := getCalClient()
+	if err != nil {
+		log.Fatalf("Unable to get CalClient: %v", err)
+		return
+	}
 	event := &calendar.Event{
 		Summary: title,
 		Start: &calendar.EventDateTime{
@@ -33,7 +37,7 @@ func CreateEvent(title string, start string, end string) {
 		},
 	}
 
-	event, err = srv.Events.Insert(calendarId, event).Do()
+	event, err = srv.Events.Insert(CalendarId, event).Do()
 	if err != nil {
 		log.Fatalf("Unable to create event. %v\n", err)
 	}
@@ -63,14 +67,18 @@ func getCalClient() (*calendar.Service, error) {
 
 func DeleteAllUniEvents() {
 	srv, err := getCalClient()
-	events, err := srv.Events.List(calendarId).ShowDeleted(false).Do()
+	if err != nil {
+		log.Fatalf("Unable to get CalClient: %v", err)
+		return
+	}
+	events, err := srv.Events.List(CalendarId).ShowDeleted(false).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve user's events: %v", err)
 		return
 	}
 
 	for _, event := range events.Items {
-		err := srv.Events.Delete(calendarId, event.Id).Do()
+		err := srv.Events.Delete(CalendarId, event.Id).Do()
 		if err != nil {
 			log.Fatalf("Unable to delete event: %v", err)
 			return
