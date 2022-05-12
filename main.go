@@ -24,8 +24,8 @@ func main() {
 	}
 
 	timetableName := promptui.Prompt{
-		Label:   "Calendar ID",
-		Default: "primary",
+		Label:   "xlsx file name",
+		Default: "plan.xlsx",
 	}
 
 	tableName, err := timetableName.Run()
