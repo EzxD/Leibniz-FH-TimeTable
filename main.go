@@ -11,7 +11,7 @@ import (
 
 func main() {
 	prompt := promptui.Prompt{
-		Label:   "Calendar ID",
+		Label:   "Calendar ID test",
 		Default: "primary",
 	}
 
